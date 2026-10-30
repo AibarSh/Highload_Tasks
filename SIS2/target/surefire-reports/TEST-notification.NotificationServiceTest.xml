@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="notification.NotificationServiceTest" time="1.123" tests="7" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="27"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/macbookair/Downloads/SIS2/target/test-classes:/Users/macbookair/Downloads/SIS2/target/classes:/Users/macbookair/.m2/repository/io/grpc/grpc-netty-shaded/1.64.0/grpc-netty-shaded-1.64.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-util/1.64.0/grpc-util-1.64.0.jar:/Users/macbookair/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.23/animal-sniffer-annotations-1.23.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-core/1.64.0/grpc-core-1.64.0.jar:/Users/macbookair/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/Users/macbookair/.m2/repository/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-context/1.64.0/grpc-context-1.64.0.jar:/Users/macbookair/.m2/repository/com/google/guava/guava/32.1.3-android/guava-32.1.3-android.jar:/Users/macbookair/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/Users/macbookair/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/macbookair/.m2/repository/org/checkerframework/checker-qual/3.37.0/checker-qual-3.37.0.jar:/Users/macbookair/.m2/repository/com/google/j2objc/j2objc-annotations/2.8/j2objc-annotations-2.8.jar:/Users/macbookair/.m2/repository/com/google/errorprone/error_prone_annotations/2.23.0/error_prone_annotations-2.23.0.jar:/Users/macbookair/.m2/repository/io/perfmark/perfmark-api/0.26.0/perfmark-api-0.26.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-api/1.64.0/grpc-api-1.64.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-protobuf/1.64.0/grpc-protobuf-1.64.0.jar:/Users/macbookair/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/macbookair/.m2/repository/com/google/protobuf/protobuf-java/3.25.1/protobuf-java-3.25.1.jar:/Users/macbookair/.m2/repository/com/google/api/grpc/proto-google-common-protos/2.29.0/proto-google-common-protos-2.29.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-protobuf-lite/1.64.0/grpc-protobuf-lite-1.64.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-stub/1.64.0/grpc-stub-1.64.0.jar:/Users/macbookair/.m2/repository/org/apache/tomcat/annotations-api/6.0.53/annotations-api-6.0.53.jar:/Users/macbookair/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.1/jackson-databind-2.17.1.jar:/Users/macbookair/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.1/jackson-annotations-2.17.1.jar:/Users/macbookair/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.1/jackson-core-2.17.1.jar:/Users/macbookair/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/Users/macbookair/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/Users/macbookair/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/macbookair/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/Users/macbookair/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/macbookair/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/Users/macbookair/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/Users/macbookair/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="27"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="KZ"/>
+    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/27.0.1.0.3/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/macbookair/Downloads/SIS2/target/surefire/surefirebooter-20261030114518323_3.jar /Users/macbookair/Downloads/SIS2/target/surefire 2026-10-30T11-45-17_393-jvmRun1 surefire-20261030114518323_1tmp surefire_0-20261030114518323_2tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/macbookair/Downloads/SIS2/target/test-classes:/Users/macbookair/Downloads/SIS2/target/classes:/Users/macbookair/.m2/repository/io/grpc/grpc-netty-shaded/1.64.0/grpc-netty-shaded-1.64.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-util/1.64.0/grpc-util-1.64.0.jar:/Users/macbookair/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.23/animal-sniffer-annotations-1.23.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-core/1.64.0/grpc-core-1.64.0.jar:/Users/macbookair/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/Users/macbookair/.m2/repository/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-context/1.64.0/grpc-context-1.64.0.jar:/Users/macbookair/.m2/repository/com/google/guava/guava/32.1.3-android/guava-32.1.3-android.jar:/Users/macbookair/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/Users/macbookair/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/macbookair/.m2/repository/org/checkerframework/checker-qual/3.37.0/checker-qual-3.37.0.jar:/Users/macbookair/.m2/repository/com/google/j2objc/j2objc-annotations/2.8/j2objc-annotations-2.8.jar:/Users/macbookair/.m2/repository/com/google/errorprone/error_prone_annotations/2.23.0/error_prone_annotations-2.23.0.jar:/Users/macbookair/.m2/repository/io/perfmark/perfmark-api/0.26.0/perfmark-api-0.26.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-api/1.64.0/grpc-api-1.64.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-protobuf/1.64.0/grpc-protobuf-1.64.0.jar:/Users/macbookair/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/macbookair/.m2/repository/com/google/protobuf/protobuf-java/3.25.1/protobuf-java-3.25.1.jar:/Users/macbookair/.m2/repository/com/google/api/grpc/proto-google-common-protos/2.29.0/proto-google-common-protos-2.29.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-protobuf-lite/1.64.0/grpc-protobuf-lite-1.64.0.jar:/Users/macbookair/.m2/repository/io/grpc/grpc-stub/1.64.0/grpc-stub-1.64.0.jar:/Users/macbookair/.m2/repository/org/apache/tomcat/annotations-api/6.0.53/annotations-api-6.0.53.jar:/Users/macbookair/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.1/jackson-databind-2.17.1.jar:/Users/macbookair/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.1/jackson-annotations-2.17.1.jar:/Users/macbookair/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.1/jackson-core-2.17.1.jar:/Users/macbookair/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/Users/macbookair/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/Users/macbookair/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/macbookair/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/Users/macbookair/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/macbookair/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/Users/macbookair/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/Users/macbookair/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/macbookair"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2026-10-24"/>
+    <property name="java.home" value="/opt/homebrew/Cellar/openjdk/27.0.1.0.3/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/macbookair/Downloads/SIS2"/>
+    <property name="java.vm.compressedOopsMode" value="Non-zero disjoint base"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="surefire.real.class.path" value="/Users/macbookair/Downloads/SIS2/target/surefire/surefirebooter-20261030114518323_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="27.0.1.0.3"/>
+    <property name="user.name" value="macbookair"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="27.2"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/macbookair/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/rq/dczhz5190pg1nfh9gzl5gtlh0000gn/T/"/>
+    <property name="java.version" value="27.0.1.0.3"/>
+    <property name="user.dir" value="/Users/macbookair/Downloads/SIS2"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/macbookair/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="java.vm.version" value="27.0.1.0.3"/>
+    <property name="stdin.encoding" value="UTF-8"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="71.0"/>
+  </properties>
+  <testcase name="sameEventTwice_isEnqueuedOnce" classname="notification.NotificationServiceTest" time="0.255"/>
+  <testcase name="transientFailureBeforeCommit_isRetriedAndSucceeds" classname="notification.NotificationServiceTest" time="0.555"/>
+  <testcase name="getNotification_returnsStatus_or_notFound" classname="notification.NotificationServiceTest" time="0.013"/>
+  <testcase name="lostResponse_isRetried_withoutDoubleEnqueue" classname="notification.NotificationServiceTest" time="0.048"/>
+  <testcase name="slowServer_hitsDeadline_thenRetries_withoutDoubleEnqueue" classname="notification.NotificationServiceTest" time="0.212"/>
+  <testcase name="sameIdDifferentPayload_isRejected_andNotRetried" classname="notification.NotificationServiceTest" time="0.015"/>
+  <testcase name="invalidRequest_isRejected_andNotRetried" classname="notification.NotificationServiceTest" time="0.008"/>
+</testsuite>

@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package notification.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "notification.v1";
+
+// gRPC version of the REST contract from SIS #1:
+//   POST /v1/notification-events      -> SubmitEvent
+//   GET  /v1/notifications/{id}       -> GetNotification
+service NotificationService {
+  // Idempotent: the same event_id + same payload may be sent any number of times
+  // and results in exactly one enqueue. Same event_id + different payload is
+  // rejected with ALREADY_EXISTS (REST 409).
+  rpc SubmitEvent(SubmitEventRequest) returns (SubmitEventResponse);
+  rpc GetNotification(GetNotificationRequest) returns (GetNotificationResponse);
+}
+
+enum Channel {
+  CHANNEL_UNSPECIFIED = 0;
+  CHANNEL_EMAIL = 1;
+  CHANNEL_PUSH = 2;
+}
+
+enum DeliveryStatus {
+  DELIVERY_STATUS_UNSPECIFIED = 0;
+  DELIVERY_STATUS_QUEUED = 1;
+  DELIVERY_STATUS_SENT = 2;
+  DELIVERY_STATUS_FAILED = 3;
+}
+
+message SubmitEventRequest {
+  string event_id = 1;      // idempotency key, chosen by the caller
+  string recipient_id = 2;
+  Channel channel = 3;
+  string template_id = 4;
+  map<string, string> data = 5;
+}
+
+message SubmitEventResponse {
+  string event_id = 1;
+  DeliveryStatus status = 2;
+  bool duplicate = 3;       // true when this event_id was already accepted
+}
+
+message GetNotificationRequest {
+  string event_id = 1;
+}
+
+message GetNotificationResponse {
+  string event_id = 1;
+  DeliveryStatus status = 2;
+  int32 attempts = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
