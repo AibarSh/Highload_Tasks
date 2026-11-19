@@ -1,0 +1,64 @@
+pgbench (16.15 (Ubuntu 16.15-0ubuntu0.24.04.1))
+transaction type: multiple scripts
+scaling factor: 1
+query mode: simple
+number of clients: 8
+number of threads: 1
+maximum number of tries: 1
+duration: 45 s
+number of transactions actually processed: 55030
+number of failed transactions: 0 (0.000%)
+latency average = 6.540 ms
+initial connection time = 50.174 ms
+tps = 1223.281399 (without initial connection time)
+SQL script 1: /home/bench/sis3/bench/ingest.sql
+ - weight: 60 (targets 60.0% of total)
+ - 33025 transactions (60.0% of total, tps = 734.124445)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 7.226 ms
+ - latency stddev = 4.505 ms
+ - statement latencies in milliseconds and failures:
+         0.001           0  \set is_new random(1, 100)
+         0.000           0  \set rid random(1, 500000)
+         0.000           0  \set newk random(100000000, 2000000000)
+         0.000           0  \set oldk random(1, :N)
+         0.000           0  \if :is_new <= 90
+         0.000           0  \set k :newk
+         0.000           0  \set ts_epoch 0
+         0.000           0  \else
+         0.001           0  \set k :oldk
+         0.002           0  \set ts_epoch :anchor - 604800 + (:k * 604800) / :N
+         0.000           0  \endif
+         0.001           0  \set chmod :k % 5
+         0.552           0  BEGIN;
+         0.387           0  SELECT email_on, push_on FROM preferences WHERE recipient_id = :rid;
+         0.595           0  INSERT INTO notification_events (event_id, recipient_id, channel, payload_ref, accepted_at)
+         0.923           0  WITH d AS (
+         4.765           0  COMMIT;
+SQL script 2: /home/bench/sis3/bench/update.sql
+ - weight: 30 (targets 30.0% of total)
+ - 16564 transactions (30.1% of total, tps = 368.207034)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 4.747 ms
+ - latency stddev = 3.527 ms
+ - statement latencies in milliseconds and failures:
+         0.001           0  \set id random(1, :N)
+         0.001           0  \set ts_epoch :anchor - 604800 + (:id * 604800) / :N
+         0.001           0  \set prov :id % 1000
+         4.745           0  UPDATE deliveries
+SQL script 3: /home/bench/sis3/bench/relay.sql
+ - weight: 6 (targets 6.0% of total)
+ - 3212 transactions (5.8% of total, tps = 71.400688)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 4.631 ms
+ - latency stddev = 2.995 ms
+ - statement latencies in milliseconds and failures:
+         4.631           0  WITH c AS (
+SQL script 4: /home/bench/sis3/bench/retry.sql
+ - weight: 4 (targets 4.0% of total)
+ - 2229 transactions (4.1% of total, tps = 49.549232)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 11.679 ms
+ - latency stddev = 4.927 ms
+ - statement latencies in milliseconds and failures:
+        11.679           0  WITH c AS (

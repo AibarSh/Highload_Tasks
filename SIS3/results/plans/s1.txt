@@ -1,0 +1,175 @@
+
+=== Q1 ingest dedupe lookup: does (event_id, channel) already exist?
+                                                QUERY PLAN                                                 
+-----------------------------------------------------------------------------------------------------------
+ Index Only Scan using deliveries_event_channel_uq on deliveries (actual time=0.083..0.084 rows=1 loops=1)
+   Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
+   Heap Fetches: 1
+   Buffers: shared hit=2 read=3
+   I/O Timings: shared read=0.014
+ Planning:
+   Buffers: shared hit=140 read=3
+   I/O Timings: shared read=0.030
+ Planning Time: 0.793 ms
+ Execution Time: 0.098 ms
+(10 rows)
+
+
+=== Q2 status API: GET /v1/notifications/{id}
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ Index Scan using deliveries_event_channel_uq on deliveries (actual time=0.005..0.005 rows=1 loops=1)
+   Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
+   Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=15
+ Planning Time: 0.088 ms
+ Execution Time: 0.019 ms
+(7 rows)
+
+
+=== Q2b status API, partition-aware (id carries its day)
+                                                                                                           QUERY PLAN                                                                                                           
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using deliveries_event_channel_uq on deliveries (actual time=0.008..0.009 rows=1 loops=1)
+   Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
+   Filter: ((accepted_at >= date_trunc('day'::text, '2026-11-15 07:42:13+00'::timestamp with time zone)) AND (accepted_at < (date_trunc('day'::text, '2026-11-15 07:42:13+00'::timestamp with time zone) + '1 day'::interval)))
+   Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=16
+ Planning Time: 0.081 ms
+ Execution Time: 0.013 ms
+(8 rows)
+
+
+=== Q3 worker ACK: UPDATE by delivery_id + accepted_at
+                                           QUERY PLAN                                           
+------------------------------------------------------------------------------------------------
+ Update on deliveries (actual time=0.144..0.145 rows=0 loops=1)
+   Buffers: shared hit=22 read=3 dirtied=2
+   I/O Timings: shared read=0.019
+   ->  Index Scan using deliveries_pkey on deliveries (actual time=0.046..0.047 rows=1 loops=1)
+         Index Cond: (delivery_id = 1234567)
+         Filter: (accepted_at = '2026-11-15 07:42:13+00'::timestamp with time zone)
+         Buffers: shared hit=9
+ Planning:
+   Buffers: shared hit=22
+ Planning Time: 0.065 ms
+ Execution Time: 0.192 ms
+(11 rows)
+
+
+=== Q4 outbox relay: claim 50 unpublished rows
+                                                    QUERY PLAN                                                    
+------------------------------------------------------------------------------------------------------------------
+ Update on outbox o (actual time=0.519..0.520 rows=0 loops=1)
+   Buffers: shared hit=565 read=2
+   I/O Timings: shared read=0.009
+   CTE c
+     ->  Limit (actual time=0.051..0.075 rows=50 loops=1)
+           Buffers: shared hit=51 read=2
+           I/O Timings: shared read=0.009
+           ->  LockRows (actual time=0.049..0.070 rows=50 loops=1)
+                 Buffers: shared hit=51 read=2
+                 I/O Timings: shared read=0.009
+                 ->  Index Scan using outbox_unpublished_idx on outbox (actual time=0.040..0.047 rows=50 loops=1)
+                       Filter: (published_at IS NULL)
+                       Buffers: shared hit=1 read=2
+                       I/O Timings: shared read=0.009
+   ->  Nested Loop (actual time=0.094..0.178 rows=50 loops=1)
+         Buffers: shared hit=251 read=2
+         I/O Timings: shared read=0.009
+         ->  CTE Scan on c (actual time=0.065..0.102 rows=50 loops=1)
+               Buffers: shared hit=51 read=2
+               I/O Timings: shared read=0.009
+         ->  Index Scan using outbox_pkey on outbox o (actual time=0.001..0.001 rows=1 loops=50)
+               Index Cond: (id = c.id)
+               Filter: (c.created_at = created_at)
+               Buffers: shared hit=200
+ Planning:
+   Buffers: shared hit=139 read=1
+   I/O Timings: shared read=0.007
+ Planning Time: 0.270 ms
+ Execution Time: 0.622 ms
+(29 rows)
+
+
+=== Q5 retry scheduler: claim 50 due deliveries
+                                                    QUERY PLAN                                                    
+------------------------------------------------------------------------------------------------------------------
+ Update on deliveries d (actual time=1.068..1.070 rows=0 loops=1)
+   Buffers: shared hit=1014 read=89 dirtied=68
+   I/O Timings: shared read=0.356
+   CTE c
+     ->  Limit (actual time=0.052..0.117 rows=50 loops=1)
+           Buffers: shared hit=84 read=2
+           I/O Timings: shared read=0.013
+           ->  LockRows (actual time=0.051..0.112 rows=50 loops=1)
+                 Buffers: shared hit=84 read=2
+                 I/O Timings: shared read=0.013
+                 ->  Index Scan using deliveries_due_idx on deliveries (actual time=0.040..0.083 rows=50 loops=1)
+                       Index Cond: (next_attempt_at <= now())
+                       Filter: (status = ANY ('{queued,retry}'::text[]))
+                       Buffers: shared hit=17 read=2
+                       I/O Timings: shared read=0.013
+   ->  Nested Loop (actual time=0.070..0.280 rows=50 loops=1)
+         Buffers: shared hit=284 read=2
+         I/O Timings: shared read=0.013
+         ->  CTE Scan on c (actual time=0.058..0.142 rows=50 loops=1)
+               Buffers: shared hit=84 read=2
+               I/O Timings: shared read=0.013
+         ->  Index Scan using deliveries_pkey on deliveries d (actual time=0.002..0.002 rows=1 loops=50)
+               Index Cond: (delivery_id = c.delivery_id)
+               Filter: (c.accepted_at = accepted_at)
+               Buffers: shared hit=200
+ Planning:
+   Buffers: shared hit=65
+ Planning Time: 0.342 ms
+ Execution Time: 1.096 ms
+(29 rows)
+
+
+=== Q6 monitoring: status counts for a 1-hour window
+                                                                                        QUERY PLAN                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ HashAggregate (actual time=2.449..2.451 rows=4 loops=1)
+   Group Key: status
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=214 read=22
+   I/O Timings: shared read=0.080
+   ->  Index Scan using deliveries_accepted_at_idx on deliveries (actual time=0.019..1.212 rows=11904 loops=1)
+         Index Cond: ((accepted_at >= ('2026-11-18 00:00:00+00'::timestamp with time zone - '01:00:00'::interval)) AND (accepted_at < '2026-11-18 00:00:00+00'::timestamp with time zone))
+         Buffers: shared hit=214 read=22
+         I/O Timings: shared read=0.080
+ Planning:
+   Buffers: shared hit=19 read=2
+   I/O Timings: shared read=0.012
+ Planning Time: 0.139 ms
+ Execution Time: 2.472 ms
+(14 rows)
+
+
+=== Q7 daily report: failed deliveries for ONE seeded day (time-range query)
+                                                                                                         QUERY PLAN                                                                                                         
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize Aggregate (actual time=34.124..38.039 rows=1 loops=1)
+   Buffers: shared hit=5225 read=517
+   I/O Timings: shared read=2.126
+   ->  Gather (actual time=34.024..38.033 rows=3 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=5225 read=517
+         I/O Timings: shared read=2.126
+         ->  Partial Aggregate (actual time=29.327..29.328 rows=1 loops=3)
+               Buffers: shared hit=5225 read=517
+               I/O Timings: shared read=2.126
+               ->  Parallel Index Scan using deliveries_accepted_at_idx on deliveries (actual time=0.061..29.289 rows=476 loops=3)
+                     Index Cond: ((accepted_at >= ('2026-11-18 00:00:00+00'::timestamp with time zone - '3 days'::interval)) AND (accepted_at < ('2026-11-18 00:00:00+00'::timestamp with time zone - '2 days'::interval)))
+                     Filter: (status = 'failed'::text)
+                     Rows Removed by Filter: 94762
+                     Buffers: shared hit=5225 read=517
+                     I/O Timings: shared read=2.126
+ Planning Time: 0.083 ms
+ Execution Time: 38.065 ms
+(19 rows)
+

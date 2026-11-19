@@ -1,0 +1,30 @@
+pgbench (16.15 (Ubuntu 16.15-0ubuntu0.24.04.1))
+transaction type: multiple scripts
+scaling factor: 1
+query mode: simple
+number of clients: 4
+number of threads: 1
+maximum number of tries: 1
+duration: 45 s
+number of transactions actually processed: 55659
+number of failed transactions: 0 (0.000%)
+latency average = 3.235 ms
+initial connection time = 12.889 ms
+tps = 1236.444215 (without initial connection time)
+SQL script 1: /home/bench/sis3/bench/read_status.sql
+ - weight: 95 (targets 95.0% of total)
+ - 52850 transactions (95.0% of total, tps = 1174.043313)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 2.830 ms
+ - latency stddev = 2.863 ms
+ - statement latencies in milliseconds and failures:
+         0.001           0  \set n random(1, :N)
+         2.828           0  SELECT status, attempts, updated_at FROM deliveries WHERE event_id = md5(CAST(:n AS text))::uuid;
+SQL script 2: /home/bench/sis3/bench/monitor.sql
+ - weight: 5 (targets 5.0% of total)
+ - 2809 transactions (5.0% of total, tps = 62.400902)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 10.624 ms
+ - latency stddev = 7.585 ms
+ - statement latencies in milliseconds and failures:
+        10.624           0  SELECT status, count(*) FROM deliveries

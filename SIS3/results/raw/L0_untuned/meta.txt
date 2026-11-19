@@ -1,0 +1,1 @@
+duration=180 wal_bytes=2508528 writer_clients=8 reader_clients=4 cpu_primary=104.60 cpu_replica=0.00 cpu_pooler=0.02 cpu_window=164

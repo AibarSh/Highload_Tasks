@@ -1,0 +1,7 @@
+        table        | table_size | index_size | total  
+---------------------+------------+------------+--------
+ deliveries          | 206 MB     | 213 MB     | 419 MB
+ notification_events | 301 MB     | 104 MB     | 405 MB
+ outbox              | 115 MB     | 60 MB      | 176 MB
+(3 rows)
+

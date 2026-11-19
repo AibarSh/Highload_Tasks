@@ -1,0 +1,31 @@
+Time: 0.146 ms
+Time: 0.725 ms
+Time: 0.081 ms
+=== DELETE rows older than 2026-11-12 00:00:00+00
+>>> DELETE notification_events
+Time: 497.737 ms
+>>> DELETE deliveries
+Time: 227.957 ms
+>>> DELETE outbox
+Time: 288.396 ms
+ wal_written_by_delete | wal_bytes 
+-----------------------+-----------
+ 140 MB                | 146479384
+(1 row)
+
+Time: 0.393 ms
+       relname       | n_dead_tup 
+---------------------+------------
+ deliveries          |     429851
+ notification_events |     285714
+ outbox              |     326230
+(3 rows)
+
+Time: 2.652 ms
+=== VACUUM (reclaim dead rows)
+>>> VACUUM notification_events
+Time: 442.084 ms
+>>> VACUUM deliveries
+Time: 1468.188 ms (00:01.468)
+>>> VACUUM outbox
+Time: 128.189 ms

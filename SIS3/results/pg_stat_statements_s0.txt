@@ -1,0 +1,12 @@
+                                           query                                            | calls | mean_ms | total_s | pct  
+--------------------------------------------------------------------------------------------+-------+---------+---------+------
+ WITH d AS ( INSERT INTO deliveries (event_id, channel, status, attempts, next_attempt_at,  |   762 | 1510.18 |  1150.8 | 52.1
+ SELECT status, attempts, updated_at FROM deliveries WHERE event_id = md5(CAST($1 AS text)) |  1013 |  704.16 |   713.3 | 32.3
+ WITH c AS ( SELECT delivery_id, accepted_at FROM deliveries WHERE status IN ($1, $2) AND n |    58 | 2623.05 |   152.1 |  6.9
+ WITH c AS ( SELECT id, created_at FROM outbox WHERE published_at IS NULL ORDER BY id LIMIT |    61 | 2377.25 |   145.0 |  6.6
+ SELECT status, count(*) FROM deliveries WHERE accepted_at >= to_timestamp($1) - interval $ |    47 |  973.31 |    45.7 |  2.1
+ INSERT INTO notification_events (event_id, recipient_id, channel, payload_ref, accepted_at |   762 |    1.03 |     0.8 |  0.0
+ SELECT email_on, push_on FROM preferences WHERE recipient_id = $1                          |   762 |    0.41 |     0.3 |  0.0
+ UPDATE deliveries SET status = $1, attempts = attempts + $2, provider_id = $3 || $4, updat |   318 |    0.06 |     0.0 |  0.0
+(8 rows)
+
