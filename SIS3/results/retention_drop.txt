@@ -1,25 +1,25 @@
-Time: 0.231 ms
-Time: 1.411 ms
-Time: 0.114 ms
+Time: 0.152 ms
+Time: 9.667 ms
+Time: 0.491 ms
 === rows in the partitions about to be dropped
  deliveries_rows 
 -----------------
           285714
 (1 row)
 
-Time: 53.682 ms
-=== DETACH + DROP deliveries_p20261111, notification_events_p20261111, outbox_p20261111
+Time: 74.535 ms
+=== DETACH + DROP deliveries_p20261112, notification_events_p20261112, outbox_p20261112
 >>> DETACH notification_events partition
-Time: 3.056 ms
+Time: 16.017 ms
 >>> DETACH deliveries partition
-Time: 6.065 ms
+Time: 1.100 ms
 >>> DETACH outbox partition
-Time: 1.648 ms
+Time: 1.965 ms
 >>> DROP the three detached partitions
-Time: 179.430 ms
+Time: 35.560 ms
  wal_written_by_drop | wal_bytes 
 ---------------------+-----------
- 328 kB              |    335912
+ 349 kB              |    357304
 (1 row)
 
-Time: 0.667 ms
+Time: 1.903 ms

@@ -1,4 +1,4 @@
-pgbench (16.15 (Ubuntu 16.15-0ubuntu0.24.04.1))
+pgbench (16.16 (Homebrew))
 transaction type: multiple scripts
 scaling factor: 1
 query mode: simple
@@ -6,26 +6,26 @@ number of clients: 4
 number of threads: 1
 maximum number of tries: 1
 duration: 45 s
-number of transactions actually processed: 39423
+number of transactions actually processed: 136703
 number of failed transactions: 0 (0.000%)
-latency average = 4.565 ms
-initial connection time = 23.205 ms
-tps = 876.252997 (without initial connection time)
-SQL script 1: /home/bench/sis3/bench/read_status_pruned.sql
+latency average = 1.317 ms
+initial connection time = 8.335 ms
+tps = 3037.893928 (without initial connection time)
+SQL script 1: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/read_status_pruned.sql
  - weight: 95 (targets 95.0% of total)
- - 37531 transactions (95.2% of total, tps = 834.199610)
+ - 129883 transactions (95.0% of total, tps = 2886.335904)
  - number of failed transactions: 0 (0.000%)
- - latency average = 4.199 ms
- - latency stddev = 3.264 ms
+ - latency average = 1.077 ms
+ - latency stddev = 2.220 ms
  - statement latencies in milliseconds and failures:
          0.001           0  \set n random(1, :N)
          0.001           0  \set ts_epoch :anchor - 604800 + (:n * 604800) / :N
-         4.196           0  SELECT status, attempts, updated_at FROM deliveries
-SQL script 2: /home/bench/sis3/bench/monitor.sql
+         1.075           0  SELECT status, attempts, updated_at FROM deliveries
+SQL script 2: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/monitor.sql
  - weight: 5 (targets 5.0% of total)
- - 1892 transactions (4.8% of total, tps = 42.053387)
+ - 6820 transactions (5.0% of total, tps = 151.558024)
  - number of failed transactions: 0 (0.000%)
- - latency average = 11.552 ms
- - latency stddev = 7.291 ms
+ - latency average = 5.440 ms
+ - latency stddev = 2.986 ms
  - statement latencies in milliseconds and failures:
-        11.552           0  SELECT status, count(*) FROM deliveries
+         5.440           0  SELECT status, count(*) FROM deliveries

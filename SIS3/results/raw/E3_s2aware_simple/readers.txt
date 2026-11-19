@@ -1,17 +1,17 @@
-pgbench (16.15 (Ubuntu 16.15-0ubuntu0.24.04.1))
-transaction type: /home/bench/sis3/bench/read_status_pruned.sql
+pgbench (16.16 (Homebrew))
+transaction type: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/read_status_pruned.sql
 scaling factor: 1
 query mode: simple
 number of clients: 4
 number of threads: 1
 maximum number of tries: 1
 duration: 20 s
-number of transactions actually processed: 46380
+number of transactions actually processed: 151142
 number of failed transactions: 0 (0.000%)
-latency average = 1.724 ms
-initial connection time = 8.419 ms
-tps = 2319.853242 (without initial connection time)
+latency average = 0.529 ms
+initial connection time = 8.446 ms
+tps = 7558.232979 (without initial connection time)
 statement latencies in milliseconds and failures:
-         0.001           0  \set n random(1, :N)
-         0.001           0  \set ts_epoch :anchor - 604800 + (:n * 604800) / :N
-         1.716           0  SELECT status, attempts, updated_at FROM deliveries
+         0.000           0  \set n random(1, :N)
+         0.000           0  \set ts_epoch :anchor - 604800 + (:n * 604800) / :N
+         0.525           0  SELECT status, attempts, updated_at FROM deliveries

@@ -1,2 +1,2 @@
-direct     mean=3.311 p50=3.244 p95=3.747 p99=4.196 ms
-pgbouncer  mean=3.676 p50=3.414 p95=4.859 p99=5.952 ms
+direct     mean=3.106 p50=2.601 p95=5.592 p99=9.224 ms
+pgbouncer  mean=3.187 p50=3.076 p95=4.044 p99=5.265 ms

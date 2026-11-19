@@ -1,4 +1,4 @@
-pgbench (16.15 (Ubuntu 16.15-0ubuntu0.24.04.1))
+pgbench (16.16 (Homebrew))
 transaction type: multiple scripts
 scaling factor: 1
 query mode: simple
@@ -6,25 +6,25 @@ number of clients: 4
 number of threads: 1
 maximum number of tries: 1
 duration: 45 s
-number of transactions actually processed: 41050
+number of transactions actually processed: 133586
 number of failed transactions: 0 (0.000%)
-latency average = 4.385 ms
-initial connection time = 0.793 ms
-tps = 912.151237 (without initial connection time)
-SQL script 1: /home/bench/sis3/bench/read_status.sql
+latency average = 1.347 ms
+initial connection time = 4.185 ms
+tps = 2968.529754 (without initial connection time)
+SQL script 1: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/read_status.sql
  - weight: 95 (targets 95.0% of total)
- - 39029 transactions (95.1% of total, tps = 867.243620)
+ - 126648 transactions (94.8% of total, tps = 2814.354470)
  - number of failed transactions: 0 (0.000%)
- - latency average = 3.912 ms
- - latency stddev = 3.426 ms
+ - latency average = 1.057 ms
+ - latency stddev = 2.748 ms
  - statement latencies in milliseconds and failures:
          0.001           0  \set n random(1, :N)
-         3.911           0  SELECT status, attempts, updated_at FROM deliveries WHERE event_id = md5(CAST(:n AS text))::uuid;
-SQL script 2: /home/bench/sis3/bench/monitor.sql
+         1.056           0  SELECT status, attempts, updated_at FROM deliveries WHERE event_id = md5(CAST(:n AS text))::uuid;
+SQL script 2: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/monitor.sql
  - weight: 5 (targets 5.0% of total)
- - 2021 transactions (4.9% of total, tps = 44.907616)
+ - 6938 transactions (5.2% of total, tps = 154.175284)
  - number of failed transactions: 0 (0.000%)
- - latency average = 13.077 ms
- - latency stddev = 8.803 ms
+ - latency average = 6.410 ms
+ - latency stddev = 6.641 ms
  - statement latencies in milliseconds and failures:
-        13.077           0  SELECT status, count(*) FROM deliveries
+         6.410           0  SELECT status, count(*) FROM deliveries

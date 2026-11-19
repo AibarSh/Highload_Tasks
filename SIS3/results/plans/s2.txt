@@ -2,358 +2,358 @@
 === Q1 ingest dedupe lookup: does (event_id, channel) already exist?
                                                                             QUERY PLAN                                                                            
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
- Append (actual time=0.147..0.216 rows=1 loops=1)
-   Buffers: shared hit=19 read=4
-   I/O Timings: shared read=0.022
-   ->  Index Only Scan using deliveries_p20261111_event_id_channel_accepted_at_idx on deliveries_p20261111 deliveries_1 (actual time=0.030..0.031 rows=0 loops=1)
+ Append (actual time=0.609..0.651 rows=1 loops=1)
+   Buffers: shared hit=17 read=6
+   I/O Timings: shared read=0.474
+   ->  Index Only Scan using deliveries_p20261112_event_id_channel_accepted_at_idx on deliveries_p20261112 deliveries_1 (actual time=0.470..0.470 rows=0 loops=1)
          Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
          Heap Fetches: 0
          Buffers: shared read=3
-         I/O Timings: shared read=0.015
-   ->  Index Only Scan using deliveries_p20261112_event_id_channel_accepted_at_idx on deliveries_p20261112 deliveries_2 (actual time=0.023..0.023 rows=0 loops=1)
+         I/O Timings: shared read=0.461
+   ->  Index Only Scan using deliveries_p20261113_event_id_channel_accepted_at_idx on deliveries_p20261113 deliveries_2 (actual time=0.020..0.020 rows=0 loops=1)
          Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
          Heap Fetches: 0
-         Buffers: shared hit=2 read=1
-         I/O Timings: shared read=0.007
-   ->  Index Only Scan using deliveries_p20261113_event_id_channel_accepted_at_idx on deliveries_p20261113 deliveries_3 (actual time=0.032..0.032 rows=0 loops=1)
-         Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
-         Heap Fetches: 0
-         Buffers: shared hit=3
-   ->  Index Only Scan using deliveries_p20261114_event_id_channel_accepted_at_idx on deliveries_p20261114 deliveries_4 (actual time=0.025..0.025 rows=0 loops=1)
+         Buffers: shared read=3
+         I/O Timings: shared read=0.012
+   ->  Index Only Scan using deliveries_p20261114_event_id_channel_accepted_at_idx on deliveries_p20261114 deliveries_3 (actual time=0.019..0.019 rows=0 loops=1)
          Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
          Heap Fetches: 0
          Buffers: shared hit=3
-   ->  Index Only Scan using deliveries_p20261115_event_id_channel_accepted_at_idx on deliveries_p20261115 deliveries_5 (actual time=0.035..0.036 rows=1 loops=1)
+   ->  Index Only Scan using deliveries_p20261115_event_id_channel_accepted_at_idx on deliveries_p20261115 deliveries_4 (actual time=0.026..0.026 rows=0 loops=1)
+         Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
+         Heap Fetches: 0
+         Buffers: shared hit=3
+   ->  Index Only Scan using deliveries_p20261116_event_id_channel_accepted_at_idx on deliveries_p20261116 deliveries_5 (actual time=0.074..0.074 rows=1 loops=1)
          Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
          Heap Fetches: 0
          Buffers: shared hit=4
-   ->  Index Only Scan using deliveries_p20261116_event_id_channel_accepted_at_idx on deliveries_p20261116 deliveries_6 (actual time=0.029..0.029 rows=0 loops=1)
+   ->  Index Only Scan using deliveries_p20261117_event_id_channel_accepted_at_idx on deliveries_p20261117 deliveries_6 (actual time=0.017..0.017 rows=0 loops=1)
          Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
          Heap Fetches: 0
          Buffers: shared hit=3
-   ->  Index Only Scan using deliveries_p20261117_event_id_channel_accepted_at_idx on deliveries_p20261117 deliveries_7 (actual time=0.027..0.027 rows=0 loops=1)
+   ->  Index Only Scan using deliveries_p20261118_event_id_channel_accepted_at_idx on deliveries_p20261118 deliveries_7 (actual time=0.017..0.017 rows=0 loops=1)
          Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
          Heap Fetches: 0
          Buffers: shared hit=3
-   ->  Seq Scan on deliveries_p20261118 deliveries_8 (actual time=0.009..0.009 rows=0 loops=1)
+   ->  Seq Scan on deliveries_p20261119 deliveries_8 (actual time=0.005..0.005 rows=0 loops=1)
          Filter: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
          Rows Removed by Filter: 1
          Buffers: shared hit=1
-   ->  Seq Scan on deliveries_p20261119 deliveries_9 (actual time=0.002..0.002 rows=0 loops=1)
+   ->  Seq Scan on deliveries_p20261120 deliveries_9 (actual time=0.001..0.001 rows=0 loops=1)
          Filter: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
  Planning:
-   Buffers: shared hit=886 read=2
-   I/O Timings: shared read=0.017
- Planning Time: 1.891 ms
- Execution Time: 0.287 ms
+   Buffers: shared hit=888 read=2
+   I/O Timings: shared read=0.063
+ Planning Time: 3.797 ms
+ Execution Time: 0.989 ms
 (44 rows)
 
 
 === Q2 status API: GET /v1/notifications/{id}
                                                                          QUERY PLAN                                                                          
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
- Append (actual time=0.046..0.067 rows=1 loops=1)
+ Append (actual time=0.015..0.021 rows=1 loops=1)
    Buffers: shared hit=23
-   ->  Index Scan using deliveries_p20261111_event_id_channel_accepted_at_idx on deliveries_p20261111 deliveries_1 (actual time=0.006..0.006 rows=0 loops=1)
+   ->  Index Scan using deliveries_p20261112_event_id_channel_accepted_at_idx on deliveries_p20261112 deliveries_1 (actual time=0.002..0.002 rows=0 loops=1)
          Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Buffers: shared hit=3
-   ->  Index Scan using deliveries_p20261112_event_id_channel_accepted_at_idx on deliveries_p20261112 deliveries_2 (actual time=0.006..0.006 rows=0 loops=1)
+   ->  Index Scan using deliveries_p20261113_event_id_channel_accepted_at_idx on deliveries_p20261113 deliveries_2 (actual time=0.001..0.001 rows=0 loops=1)
          Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Buffers: shared hit=3
-   ->  Index Scan using deliveries_p20261113_event_id_channel_accepted_at_idx on deliveries_p20261113 deliveries_3 (actual time=0.008..0.008 rows=0 loops=1)
+   ->  Index Scan using deliveries_p20261114_event_id_channel_accepted_at_idx on deliveries_p20261114 deliveries_3 (actual time=0.002..0.002 rows=0 loops=1)
          Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Buffers: shared hit=3
-   ->  Index Scan using deliveries_p20261114_event_id_channel_accepted_at_idx on deliveries_p20261114 deliveries_4 (actual time=0.009..0.009 rows=0 loops=1)
+   ->  Index Scan using deliveries_p20261115_event_id_channel_accepted_at_idx on deliveries_p20261115 deliveries_4 (actual time=0.002..0.002 rows=0 loops=1)
          Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Buffers: shared hit=3
-   ->  Index Scan using deliveries_p20261115_event_id_channel_accepted_at_idx on deliveries_p20261115 deliveries_5 (actual time=0.017..0.017 rows=1 loops=1)
+   ->  Index Scan using deliveries_p20261116_event_id_channel_accepted_at_idx on deliveries_p20261116 deliveries_5 (actual time=0.008..0.008 rows=1 loops=1)
          Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Buffers: shared hit=4
-   ->  Index Scan using deliveries_p20261116_event_id_channel_accepted_at_idx on deliveries_p20261116 deliveries_6 (actual time=0.008..0.008 rows=0 loops=1)
+   ->  Index Scan using deliveries_p20261117_event_id_channel_accepted_at_idx on deliveries_p20261117 deliveries_6 (actual time=0.002..0.002 rows=0 loops=1)
          Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Buffers: shared hit=3
-   ->  Index Scan using deliveries_p20261117_event_id_channel_accepted_at_idx on deliveries_p20261117 deliveries_7 (actual time=0.007..0.007 rows=0 loops=1)
+   ->  Index Scan using deliveries_p20261118_event_id_channel_accepted_at_idx on deliveries_p20261118 deliveries_7 (actual time=0.001..0.001 rows=0 loops=1)
          Index Cond: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Buffers: shared hit=3
-   ->  Seq Scan on deliveries_p20261118 deliveries_8 (actual time=0.003..0.003 rows=0 loops=1)
+   ->  Seq Scan on deliveries_p20261119 deliveries_8 (actual time=0.002..0.002 rows=0 loops=1)
          Filter: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Rows Removed by Filter: 1
          Buffers: shared hit=1
-   ->  Seq Scan on deliveries_p20261119 deliveries_9 (actual time=0.000..0.000 rows=0 loops=1)
+   ->  Seq Scan on deliveries_p20261120 deliveries_9 (actual time=0.001..0.001 rows=0 loops=1)
          Filter: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
  Planning:
-   Buffers: shared hit=88
- Planning Time: 0.327 ms
- Execution Time: 0.086 ms
+   Buffers: shared hit=82
+ Planning Time: 0.185 ms
+ Execution Time: 0.033 ms
 (33 rows)
 
 
 === Q2b status API, partition-aware (id carries its day)
                                                                                                                                                QUERY PLAN                                                                                                                                               
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- Append (actual time=0.013..0.014 rows=1 loops=1)
+ Append (actual time=0.006..0.006 rows=1 loops=1)
    Buffers: shared hit=4
    Subplans Removed: 8
-   ->  Index Scan using deliveries_p20261115_event_id_channel_accepted_at_idx on deliveries_p20261115 deliveries_1 (actual time=0.012..0.013 rows=1 loops=1)
-         Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (accepted_at >= date_trunc('day'::text, '2026-11-15 07:42:13+00'::timestamp with time zone)) AND (accepted_at < (date_trunc('day'::text, '2026-11-15 07:42:13+00'::timestamp with time zone) + '1 day'::interval)))
+   ->  Index Scan using deliveries_p20261116_event_id_channel_accepted_at_idx on deliveries_p20261116 deliveries_1 (actual time=0.005..0.006 rows=1 loops=1)
+         Index Cond: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (accepted_at >= date_trunc('day'::text, '2026-11-16 07:42:13+00'::timestamp with time zone)) AND (accepted_at < (date_trunc('day'::text, '2026-11-16 07:42:13+00'::timestamp with time zone) + '1 day'::interval)))
          Buffers: shared hit=4
  Planning:
-   Buffers: shared hit=130 read=3
-   I/O Timings: shared read=0.012
- Planning Time: 0.642 ms
- Execution Time: 0.034 ms
+   Buffers: shared hit=126 read=3
+   I/O Timings: shared read=0.496
+ Planning Time: 1.146 ms
+ Execution Time: 0.018 ms
 (11 rows)
 
 
 === Q3 worker ACK: UPDATE by delivery_id + accepted_at
                                                            QUERY PLAN                                                            
 ---------------------------------------------------------------------------------------------------------------------------------
- Update on deliveries (actual time=0.166..0.166 rows=0 loops=1)
-   Update on deliveries_p20261115 deliveries_1
+ Update on deliveries (actual time=0.120..0.120 rows=0 loops=1)
+   Update on deliveries_p20261116 deliveries_1
    Buffers: shared hit=31
-   ->  Index Scan using deliveries_p20261115_pkey on deliveries_p20261115 deliveries_1 (actual time=0.020..0.021 rows=1 loops=1)
-         Index Cond: ((delivery_id = 1234567) AND (accepted_at = '2026-11-15 07:42:13+00'::timestamp with time zone))
+   ->  Index Scan using deliveries_p20261116_pkey on deliveries_p20261116 deliveries_1 (actual time=0.016..0.016 rows=1 loops=1)
+         Index Cond: ((delivery_id = 1234567) AND (accepted_at = '2026-11-16 07:42:13+00'::timestamp with time zone))
          Buffers: shared hit=7
  Planning:
    Buffers: shared hit=11
- Planning Time: 0.081 ms
- Execution Time: 0.265 ms
+ Planning Time: 0.046 ms
+ Execution Time: 0.228 ms
 (10 rows)
 
 
 === Q4 outbox relay: claim 50 unpublished rows
                                                                  QUERY PLAN                                                                 
 --------------------------------------------------------------------------------------------------------------------------------------------
- Update on outbox o (actual time=0.542..0.545 rows=0 loops=1)
-   Update on outbox_p20261111 o_1
-   Update on outbox_p20261112 o_2
-   Update on outbox_p20261113 o_3
-   Update on outbox_p20261114 o_4
-   Update on outbox_p20261115 o_5
-   Update on outbox_p20261116 o_6
-   Update on outbox_p20261117 o_7
-   Update on outbox_p20261118 o_8
-   Update on outbox_p20261119 o_9
+ Update on outbox o (actual time=0.376..0.377 rows=0 loops=1)
+   Update on outbox_p20261112 o_1
+   Update on outbox_p20261113 o_2
+   Update on outbox_p20261114 o_3
+   Update on outbox_p20261115 o_4
+   Update on outbox_p20261116 o_5
+   Update on outbox_p20261117 o_6
+   Update on outbox_p20261118 o_7
+   Update on outbox_p20261119 o_8
+   Update on outbox_p20261120 o_9
    Buffers: shared hit=633 dirtied=1 written=1
-   I/O Timings: shared write=0.029
+   I/O Timings: shared write=0.024
    CTE c
-     ->  Limit (actual time=0.074..0.111 rows=50 loops=1)
+     ->  Limit (actual time=0.038..0.059 rows=50 loops=1)
            Buffers: shared hit=63
-           ->  LockRows (actual time=0.073..0.106 rows=50 loops=1)
+           ->  LockRows (actual time=0.038..0.057 rows=50 loops=1)
                  Buffers: shared hit=63
-                 ->  Merge Append (actual time=0.058..0.073 rows=50 loops=1)
+                 ->  Merge Append (actual time=0.014..0.022 rows=50 loops=1)
                        Sort Key: outbox.id
                        Buffers: shared hit=12
-                       ->  Index Scan using outbox_p20261111_id_idx on outbox_p20261111 outbox_1 (actual time=0.006..0.007 rows=0 loops=1)
+                       ->  Index Scan using outbox_p20261112_id_idx on outbox_p20261112 outbox_1 (actual time=0.001..0.001 rows=0 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=1
-                       ->  Index Scan using outbox_p20261112_id_idx on outbox_p20261112 outbox_2 (actual time=0.004..0.004 rows=0 loops=1)
+                       ->  Index Scan using outbox_p20261113_id_idx on outbox_p20261113 outbox_2 (actual time=0.000..0.000 rows=0 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=1
-                       ->  Index Scan using outbox_p20261113_id_idx on outbox_p20261113 outbox_3 (actual time=0.003..0.003 rows=0 loops=1)
+                       ->  Index Scan using outbox_p20261114_id_idx on outbox_p20261114 outbox_3 (actual time=0.000..0.000 rows=0 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=1
-                       ->  Index Scan using outbox_p20261114_id_idx on outbox_p20261114 outbox_4 (actual time=0.004..0.004 rows=0 loops=1)
+                       ->  Index Scan using outbox_p20261115_id_idx on outbox_p20261115 outbox_4 (actual time=0.000..0.000 rows=0 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=1
-                       ->  Index Scan using outbox_p20261115_id_idx on outbox_p20261115 outbox_5 (actual time=0.003..0.003 rows=0 loops=1)
+                       ->  Index Scan using outbox_p20261116_id_idx on outbox_p20261116 outbox_5 (actual time=0.000..0.000 rows=0 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=1
-                       ->  Index Scan using outbox_p20261116_id_idx on outbox_p20261116 outbox_6 (actual time=0.003..0.003 rows=0 loops=1)
+                       ->  Index Scan using outbox_p20261117_id_idx on outbox_p20261117 outbox_6 (actual time=0.000..0.000 rows=0 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=1
-                       ->  Index Scan using outbox_p20261117_id_idx on outbox_p20261117 outbox_7 (actual time=0.020..0.028 rows=50 loops=1)
+                       ->  Index Scan using outbox_p20261118_id_idx on outbox_p20261118 outbox_7 (actual time=0.008..0.013 rows=50 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=3
-                       ->  Index Scan using outbox_p20261118_id_idx on outbox_p20261118 outbox_8 (actual time=0.007..0.007 rows=1 loops=1)
+                       ->  Index Scan using outbox_p20261119_id_idx on outbox_p20261119 outbox_8 (actual time=0.001..0.002 rows=1 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=2
-                       ->  Index Scan using outbox_p20261119_id_idx on outbox_p20261119 outbox_9 (actual time=0.004..0.004 rows=0 loops=1)
+                       ->  Index Scan using outbox_p20261120_id_idx on outbox_p20261120 outbox_9 (actual time=0.002..0.002 rows=0 loops=1)
                              Filter: (published_at IS NULL)
                              Buffers: shared hit=1
-   ->  Nested Loop (actual time=0.120..0.245 rows=50 loops=1)
+   ->  Nested Loop (actual time=0.060..0.144 rows=50 loops=1)
          Buffers: shared hit=263
-         ->  CTE Scan on c (actual time=0.088..0.141 rows=50 loops=1)
+         ->  CTE Scan on c (actual time=0.041..0.072 rows=50 loops=1)
                Buffers: shared hit=63
-         ->  Append (actual time=0.002..0.002 rows=1 loops=50)
+         ->  Append (actual time=0.001..0.001 rows=1 loops=50)
                Buffers: shared hit=200
-               ->  Index Scan using outbox_p20261111_pkey on outbox_p20261111 o_1 (never executed)
+               ->  Index Scan using outbox_p20261112_pkey on outbox_p20261112 o_1 (never executed)
                      Index Cond: ((id = c.id) AND (created_at = c.created_at))
-               ->  Index Scan using outbox_p20261112_pkey on outbox_p20261112 o_2 (never executed)
+               ->  Index Scan using outbox_p20261113_pkey on outbox_p20261113 o_2 (never executed)
                      Index Cond: ((id = c.id) AND (created_at = c.created_at))
-               ->  Index Scan using outbox_p20261113_pkey on outbox_p20261113 o_3 (never executed)
+               ->  Index Scan using outbox_p20261114_pkey on outbox_p20261114 o_3 (never executed)
                      Index Cond: ((id = c.id) AND (created_at = c.created_at))
-               ->  Index Scan using outbox_p20261114_pkey on outbox_p20261114 o_4 (never executed)
+               ->  Index Scan using outbox_p20261115_pkey on outbox_p20261115 o_4 (never executed)
                      Index Cond: ((id = c.id) AND (created_at = c.created_at))
-               ->  Index Scan using outbox_p20261115_pkey on outbox_p20261115 o_5 (never executed)
+               ->  Index Scan using outbox_p20261116_pkey on outbox_p20261116 o_5 (never executed)
                      Index Cond: ((id = c.id) AND (created_at = c.created_at))
-               ->  Index Scan using outbox_p20261116_pkey on outbox_p20261116 o_6 (never executed)
+               ->  Index Scan using outbox_p20261117_pkey on outbox_p20261117 o_6 (never executed)
                      Index Cond: ((id = c.id) AND (created_at = c.created_at))
-               ->  Index Scan using outbox_p20261117_pkey on outbox_p20261117 o_7 (actual time=0.001..0.001 rows=1 loops=50)
+               ->  Index Scan using outbox_p20261118_pkey on outbox_p20261118 o_7 (actual time=0.001..0.001 rows=1 loops=50)
                      Index Cond: ((id = c.id) AND (created_at = c.created_at))
                      Buffers: shared hit=200
-               ->  Index Scan using outbox_p20261118_pkey on outbox_p20261118 o_8 (never executed)
+               ->  Index Scan using outbox_p20261119_pkey on outbox_p20261119 o_8 (never executed)
                      Index Cond: ((id = c.id) AND (created_at = c.created_at))
-               ->  Seq Scan on outbox_p20261119 o_9 (never executed)
+               ->  Seq Scan on outbox_p20261120 o_9 (never executed)
                      Filter: ((c.id = id) AND (c.created_at = created_at))
  Planning:
-   Buffers: shared hit=616
- Planning Time: 1.104 ms
- Execution Time: 0.817 ms
+   Buffers: shared hit=611
+ Planning Time: 1.124 ms
+ Execution Time: 0.533 ms
 (76 rows)
 
 
 === Q5 retry scheduler: claim 50 due deliveries
                                                                              QUERY PLAN                                                                              
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
- Update on deliveries d (actual time=1.570..1.577 rows=0 loops=1)
-   Update on deliveries_p20261111 d_1
-   Update on deliveries_p20261112 d_2
-   Update on deliveries_p20261113 d_3
-   Update on deliveries_p20261114 d_4
-   Update on deliveries_p20261115 d_5
-   Update on deliveries_p20261116 d_6
-   Update on deliveries_p20261117 d_7
-   Update on deliveries_p20261118 d_8
-   Update on deliveries_p20261119 d_9
-   Buffers: shared hit=1040 read=111 dirtied=95 written=2
-   I/O Timings: shared read=0.491 write=0.028
+ Update on deliveries d (actual time=8.521..8.523 rows=0 loops=1)
+   Update on deliveries_p20261112 d_1
+   Update on deliveries_p20261113 d_2
+   Update on deliveries_p20261114 d_3
+   Update on deliveries_p20261115 d_4
+   Update on deliveries_p20261116 d_5
+   Update on deliveries_p20261117 d_6
+   Update on deliveries_p20261118 d_7
+   Update on deliveries_p20261119 d_8
+   Update on deliveries_p20261120 d_9
+   Buffers: shared hit=1039 read=112 dirtied=95 written=2
+   I/O Timings: shared read=7.587 write=0.129
    CTE c
-     ->  Limit (actual time=0.194..0.334 rows=50 loops=1)
-           Buffers: shared hit=85 read=22 dirtied=17
-           I/O Timings: shared read=0.102
-           ->  LockRows (actual time=0.194..0.329 rows=50 loops=1)
-                 Buffers: shared hit=85 read=22 dirtied=17
-                 I/O Timings: shared read=0.102
-                 ->  Merge Append (actual time=0.187..0.299 rows=50 loops=1)
+     ->  Limit (actual time=0.249..0.363 rows=50 loops=1)
+           Buffers: shared hit=84 read=23 dirtied=17
+           I/O Timings: shared read=0.218
+           ->  LockRows (actual time=0.248..0.361 rows=50 loops=1)
+                 Buffers: shared hit=84 read=23 dirtied=17
+                 I/O Timings: shared read=0.218
+                 ->  Merge Append (actual time=0.247..0.338 rows=50 loops=1)
                        Sort Key: deliveries.next_attempt_at
-                       Buffers: shared hit=18 read=22
-                       I/O Timings: shared read=0.102
-                       ->  Index Scan using deliveries_p20261111_next_attempt_at_idx on deliveries_p20261111 deliveries_1 (actual time=0.044..0.146 rows=50 loops=1)
+                       Buffers: shared hit=17 read=23
+                       I/O Timings: shared read=0.218
+                       ->  Index Scan using deliveries_p20261112_next_attempt_at_idx on deliveries_p20261112 deliveries_1 (actual time=0.154..0.239 rows=50 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
                              Buffers: shared read=19
-                             I/O Timings: shared read=0.084
-                       ->  Index Scan using deliveries_p20261112_next_attempt_at_idx on deliveries_p20261112 deliveries_2 (actual time=0.030..0.030 rows=1 loops=1)
+                             I/O Timings: shared read=0.203
+                       ->  Index Scan using deliveries_p20261113_next_attempt_at_idx on deliveries_p20261113 deliveries_2 (actual time=0.020..0.020 rows=1 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
-                             Buffers: shared hit=1 read=2
+                             Buffers: shared read=3
                              I/O Timings: shared read=0.013
-                       ->  Index Scan using deliveries_p20261113_next_attempt_at_idx on deliveries_p20261113 deliveries_3 (actual time=0.018..0.018 rows=1 loops=1)
+                       ->  Index Scan using deliveries_p20261114_next_attempt_at_idx on deliveries_p20261114 deliveries_3 (actual time=0.013..0.013 rows=1 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
                              Buffers: shared hit=3
-                       ->  Index Scan using deliveries_p20261114_next_attempt_at_idx on deliveries_p20261114 deliveries_4 (actual time=0.016..0.016 rows=1 loops=1)
+                       ->  Index Scan using deliveries_p20261115_next_attempt_at_idx on deliveries_p20261115 deliveries_4 (actual time=0.014..0.014 rows=1 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
                              Buffers: shared hit=3
-                       ->  Index Scan using deliveries_p20261115_next_attempt_at_idx on deliveries_p20261115 deliveries_5 (actual time=0.020..0.020 rows=1 loops=1)
+                       ->  Index Scan using deliveries_p20261116_next_attempt_at_idx on deliveries_p20261116 deliveries_5 (actual time=0.015..0.015 rows=1 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
                              Buffers: shared hit=3
-                       ->  Index Scan using deliveries_p20261116_next_attempt_at_idx on deliveries_p20261116 deliveries_6 (actual time=0.021..0.022 rows=1 loops=1)
+                       ->  Index Scan using deliveries_p20261117_next_attempt_at_idx on deliveries_p20261117 deliveries_6 (actual time=0.016..0.016 rows=1 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
                              Buffers: shared hit=3
-                       ->  Index Scan using deliveries_p20261117_next_attempt_at_idx on deliveries_p20261117 deliveries_7 (actual time=0.017..0.017 rows=1 loops=1)
+                       ->  Index Scan using deliveries_p20261118_next_attempt_at_idx on deliveries_p20261118 deliveries_7 (actual time=0.010..0.010 rows=1 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
                              Buffers: shared hit=3
-                       ->  Index Scan using deliveries_p20261118_next_attempt_at_idx on deliveries_p20261118 deliveries_8 (actual time=0.014..0.014 rows=1 loops=1)
+                       ->  Index Scan using deliveries_p20261119_next_attempt_at_idx on deliveries_p20261119 deliveries_8 (actual time=0.003..0.003 rows=1 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
                              Buffers: shared hit=1 read=1
-                             I/O Timings: shared read=0.005
-                       ->  Index Scan using deliveries_p20261119_next_attempt_at_idx on deliveries_p20261119 deliveries_9 (actual time=0.006..0.006 rows=0 loops=1)
+                             I/O Timings: shared read=0.002
+                       ->  Index Scan using deliveries_p20261120_next_attempt_at_idx on deliveries_p20261120 deliveries_9 (actual time=0.001..0.001 rows=0 loops=1)
                              Index Cond: (next_attempt_at <= now())
                              Filter: (status = ANY ('{queued,retry}'::text[]))
                              Buffers: shared hit=1
-   ->  Nested Loop (actual time=0.225..0.504 rows=50 loops=1)
-         Buffers: shared hit=278 read=29 dirtied=17
-         I/O Timings: shared read=0.127
-         ->  CTE Scan on c (actual time=0.200..0.357 rows=50 loops=1)
-               Buffers: shared hit=85 read=22 dirtied=17
-               I/O Timings: shared read=0.102
-         ->  Append (actual time=0.002..0.002 rows=1 loops=50)
+   ->  Nested Loop (actual time=0.381..0.776 rows=50 loops=1)
+         Buffers: shared hit=277 read=30 dirtied=17
+         I/O Timings: shared read=0.508
+         ->  CTE Scan on c (actual time=0.250..0.383 rows=50 loops=1)
+               Buffers: shared hit=84 read=23 dirtied=17
+               I/O Timings: shared read=0.218
+         ->  Append (actual time=0.007..0.007 rows=1 loops=50)
                Buffers: shared hit=193 read=7
-               I/O Timings: shared read=0.025
-               ->  Index Scan using deliveries_p20261111_accepted_at_idx on deliveries_p20261111 d_1 (actual time=0.002..0.002 rows=1 loops=50)
+               I/O Timings: shared read=0.290
+               ->  Index Scan using deliveries_p20261112_accepted_at_idx on deliveries_p20261112 d_1 (actual time=0.007..0.007 rows=1 loops=50)
                      Index Cond: (accepted_at = c.accepted_at)
                      Filter: (c.delivery_id = delivery_id)
                      Rows Removed by Filter: 1
                      Buffers: shared hit=193 read=7
-                     I/O Timings: shared read=0.025
-               ->  Index Scan using deliveries_p20261112_accepted_at_idx on deliveries_p20261112 d_2 (never executed)
+                     I/O Timings: shared read=0.290
+               ->  Index Scan using deliveries_p20261113_accepted_at_idx on deliveries_p20261113 d_2 (never executed)
                      Index Cond: (accepted_at = c.accepted_at)
                      Filter: (c.delivery_id = delivery_id)
-               ->  Index Scan using deliveries_p20261113_accepted_at_idx on deliveries_p20261113 d_3 (never executed)
+               ->  Index Scan using deliveries_p20261114_accepted_at_idx on deliveries_p20261114 d_3 (never executed)
                      Index Cond: (accepted_at = c.accepted_at)
                      Filter: (c.delivery_id = delivery_id)
-               ->  Index Scan using deliveries_p20261114_accepted_at_idx on deliveries_p20261114 d_4 (never executed)
+               ->  Index Scan using deliveries_p20261115_accepted_at_idx on deliveries_p20261115 d_4 (never executed)
                      Index Cond: (accepted_at = c.accepted_at)
                      Filter: (c.delivery_id = delivery_id)
-               ->  Index Scan using deliveries_p20261115_accepted_at_idx on deliveries_p20261115 d_5 (never executed)
+               ->  Index Scan using deliveries_p20261116_accepted_at_idx on deliveries_p20261116 d_5 (never executed)
                      Index Cond: (accepted_at = c.accepted_at)
                      Filter: (c.delivery_id = delivery_id)
-               ->  Index Scan using deliveries_p20261116_accepted_at_idx on deliveries_p20261116 d_6 (never executed)
+               ->  Index Scan using deliveries_p20261117_accepted_at_idx on deliveries_p20261117 d_6 (never executed)
                      Index Cond: (accepted_at = c.accepted_at)
                      Filter: (c.delivery_id = delivery_id)
-               ->  Index Scan using deliveries_p20261117_accepted_at_idx on deliveries_p20261117 d_7 (never executed)
+               ->  Index Scan using deliveries_p20261118_accepted_at_idx on deliveries_p20261118 d_7 (never executed)
                      Index Cond: (accepted_at = c.accepted_at)
                      Filter: (c.delivery_id = delivery_id)
-               ->  Index Scan using deliveries_p20261118_accepted_at_idx on deliveries_p20261118 d_8 (never executed)
+               ->  Index Scan using deliveries_p20261119_accepted_at_idx on deliveries_p20261119 d_8 (never executed)
                      Index Cond: (accepted_at = c.accepted_at)
                      Filter: (c.delivery_id = delivery_id)
-               ->  Seq Scan on deliveries_p20261119 d_9 (never executed)
+               ->  Seq Scan on deliveries_p20261120 d_9 (never executed)
                      Filter: ((c.delivery_id = delivery_id) AND (c.accepted_at = accepted_at))
  Planning:
-   Buffers: shared hit=108
- Planning Time: 0.853 ms
- Execution Time: 1.766 ms
+   Buffers: shared hit=106
+ Planning Time: 0.414 ms
+ Execution Time: 8.598 ms
 (104 rows)
 
 
 === Q6 monitoring: status counts for a 1-hour window
                                                                                            QUERY PLAN                                                                                            
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- HashAggregate (actual time=3.227..3.228 rows=4 loops=1)
+ HashAggregate (actual time=2.609..2.609 rows=4 loops=1)
    Group Key: deliveries.status
    Batches: 1  Memory Usage: 24kB
    Buffers: shared hit=235
-   ->  Append (actual time=0.015..2.154 rows=11904 loops=1)
+   ->  Append (actual time=0.010..1.571 rows=11904 loops=1)
          Buffers: shared hit=235
          Subplans Removed: 6
-         ->  Index Scan using deliveries_p20261117_accepted_at_idx on deliveries_p20261117 deliveries_1 (actual time=0.015..1.476 rows=11904 loops=1)
-               Index Cond: ((accepted_at >= ('2026-11-18 00:00:00+00'::timestamp with time zone - '01:00:00'::interval)) AND (accepted_at < '2026-11-18 00:00:00+00'::timestamp with time zone))
+         ->  Index Scan using deliveries_p20261118_accepted_at_idx on deliveries_p20261118 deliveries_1 (actual time=0.010..1.100 rows=11904 loops=1)
+               Index Cond: ((accepted_at >= ('2026-11-19 00:00:00+00'::timestamp with time zone - '01:00:00'::interval)) AND (accepted_at < '2026-11-19 00:00:00+00'::timestamp with time zone))
                Buffers: shared hit=235
  Planning:
    Buffers: shared hit=68
- Planning Time: 0.427 ms
- Execution Time: 3.259 ms
+ Planning Time: 0.319 ms
+ Execution Time: 2.624 ms
 (14 rows)
 
 
 === Q7 daily report: failed deliveries for ONE seeded day (time-range query)
                                                                                                                          QUERY PLAN                                                                                                                         
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- Finalize Aggregate (actual time=27.301..29.036 rows=1 loops=1)
+ Finalize Aggregate (actual time=10.431..11.738 rows=1 loops=1)
    Buffers: shared hit=3765
-   ->  Gather (actual time=25.113..29.026 rows=3 loops=1)
+   ->  Gather (actual time=10.372..11.732 rows=3 loops=1)
          Workers Planned: 2
          Workers Launched: 2
          Buffers: shared hit=3765
-         ->  Partial Aggregate (actual time=19.517..19.519 rows=1 loops=3)
+         ->  Partial Aggregate (actual time=8.123..8.124 rows=1 loops=3)
                Buffers: shared hit=3765
-               ->  Parallel Append (actual time=0.021..19.485 rows=476 loops=3)
+               ->  Parallel Append (actual time=0.025..8.105 rows=476 loops=3)
                      Buffers: shared hit=3765
                      Subplans Removed: 8
-                     ->  Parallel Seq Scan on deliveries_p20261115 deliveries_1 (actual time=0.020..19.449 rows=476 loops=3)
-                           Filter: ((status = 'failed'::text) AND (accepted_at >= ('2026-11-18 00:00:00+00'::timestamp with time zone - '3 days'::interval)) AND (accepted_at < ('2026-11-18 00:00:00+00'::timestamp with time zone - '2 days'::interval)))
+                     ->  Parallel Seq Scan on deliveries_p20261116 deliveries_1 (actual time=0.025..8.086 rows=476 loops=3)
+                           Filter: ((status = 'failed'::text) AND (accepted_at >= ('2026-11-19 00:00:00+00'::timestamp with time zone - '3 days'::interval)) AND (accepted_at < ('2026-11-19 00:00:00+00'::timestamp with time zone - '2 days'::interval)))
                            Rows Removed by Filter: 94762
                            Buffers: shared hit=3765
  Planning:
    Buffers: shared hit=62
- Planning Time: 0.492 ms
- Execution Time: 29.071 ms
+ Planning Time: 0.260 ms
+ Execution Time: 11.751 ms
 (19 rows)
 

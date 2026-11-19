@@ -1,68 +1,68 @@
 === sizes of the candidate indexes
             index            |  size  |  bytes   
 -----------------------------+--------+----------
- deliveries_event_channel_uq | 77 MB  | 81158144
- outbox_pkey                 | 43 MB  | 45031424
- deliveries_pkey             | 43 MB  | 44957696
- deliveries_accepted_at_idx  | 28 MB  | 29810688
- tmp_status_next_idx         | 14 MB  | 14721024
- deliveries_due_idx          | 560 kB |   573440
- outbox_unpublished_idx      | 80 kB  |    81920
+ deliveries_event_channel_uq | 77 MB  | 81199104
+ outbox_pkey                 | 43 MB  | 45113344
+ deliveries_pkey             | 43 MB  | 44974080
+ deliveries_accepted_at_idx  | 28 MB  | 29827072
+ tmp_status_next_idx         | 14 MB  | 14704640
+ deliveries_due_idx          | 552 kB |   565248
+ outbox_unpublished_idx      | 16 kB  |    16384
 (7 rows)
 
 
 === Q5 with the FULL composite index (status, next_attempt_at) only
                                                          QUERY PLAN                                                          
 -----------------------------------------------------------------------------------------------------------------------------
- Aggregate (actual time=40.855..40.857 rows=1 loops=1)
-   Buffers: shared hit=19008 read=102
-   I/O Timings: shared read=0.277
+ Aggregate (actual time=17.503..17.503 rows=1 loops=1)
+   Buffers: shared hit=18447 read=99
+   I/O Timings: shared read=0.362
    CTE c
-     ->  Limit (actual time=40.797..40.831 rows=50 loops=1)
-           Buffers: shared hit=19008 read=102
-           I/O Timings: shared read=0.277
-           ->  LockRows (actual time=40.795..40.826 rows=50 loops=1)
-                 Buffers: shared hit=19008 read=102
-                 I/O Timings: shared read=0.277
-                 ->  Sort (actual time=40.780..40.783 rows=50 loops=1)
+     ->  Limit (actual time=17.471..17.489 rows=50 loops=1)
+           Buffers: shared hit=18447 read=99
+           I/O Timings: shared read=0.362
+           ->  LockRows (actual time=17.470..17.487 rows=50 loops=1)
+                 Buffers: shared hit=18447 read=99
+                 I/O Timings: shared read=0.362
+                 ->  Sort (actual time=17.467..17.468 rows=50 loops=1)
                        Sort Key: deliveries.next_attempt_at
-                       Sort Method: quicksort  Memory: 2447kB
-                       Buffers: shared hit=18958 read=102
-                       I/O Timings: shared read=0.277
-                       ->  Index Scan using tmp_status_next_idx on deliveries (actual time=0.064..35.137 rows=30691 loops=1)
+                       Sort Method: quicksort  Memory: 2496kB
+                       Buffers: shared hit=18397 read=99
+                       I/O Timings: shared read=0.362
+                       ->  Index Scan using tmp_status_next_idx on deliveries (actual time=0.031..14.267 rows=31596 loops=1)
                              Index Cond: ((status = ANY ('{queued,retry}'::text[])) AND (next_attempt_at <= now()))
-                             Buffers: shared hit=18958 read=102
-                             I/O Timings: shared read=0.277
-   ->  CTE Scan on c (actual time=40.803..40.844 rows=50 loops=1)
-         Buffers: shared hit=19008 read=102
-         I/O Timings: shared read=0.277
+                             Buffers: shared hit=18397 read=99
+                             I/O Timings: shared read=0.362
+   ->  CTE Scan on c (actual time=17.473..17.495 rows=50 loops=1)
+         Buffers: shared hit=18447 read=99
+         I/O Timings: shared read=0.362
  Planning:
    Buffers: shared hit=79 read=1
-   I/O Timings: shared read=0.005
- Planning Time: 0.236 ms
- Execution Time: 40.945 ms
+   I/O Timings: shared read=0.004
+ Planning Time: 0.233 ms
+ Execution Time: 17.530 ms
 (27 rows)
 
 
 === Q5 with the PARTIAL index only
                                                     QUERY PLAN                                                    
 ------------------------------------------------------------------------------------------------------------------
- Aggregate (actual time=0.096..0.097 rows=1 loops=1)
+ Aggregate (actual time=0.042..0.042 rows=1 loops=1)
    Buffers: shared hit=69
    CTE c
-     ->  Limit (actual time=0.023..0.077 rows=50 loops=1)
+     ->  Limit (actual time=0.011..0.033 rows=50 loops=1)
            Buffers: shared hit=69
-           ->  LockRows (actual time=0.022..0.073 rows=50 loops=1)
+           ->  LockRows (actual time=0.011..0.030 rows=50 loops=1)
                  Buffers: shared hit=69
-                 ->  Index Scan using deliveries_due_idx on deliveries (actual time=0.019..0.054 rows=50 loops=1)
+                 ->  Index Scan using deliveries_due_idx on deliveries (actual time=0.010..0.019 rows=50 loops=1)
                        Index Cond: (next_attempt_at <= now())
                        Filter: (status = ANY ('{queued,retry}'::text[]))
                        Buffers: shared hit=19
-   ->  CTE Scan on c (actual time=0.025..0.091 rows=50 loops=1)
+   ->  CTE Scan on c (actual time=0.012..0.040 rows=50 loops=1)
          Buffers: shared hit=69
  Planning:
    Buffers: shared hit=18
- Planning Time: 0.223 ms
- Execution Time: 0.163 ms
+ Planning Time: 0.145 ms
+ Execution Time: 0.052 ms
 (17 rows)
 

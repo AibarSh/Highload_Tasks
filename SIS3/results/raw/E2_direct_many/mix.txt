@@ -1,4 +1,4 @@
-pgbench (16.15 (Ubuntu 16.15-0ubuntu0.24.04.1))
+pgbench (16.16 (Homebrew))
 transaction type: multiple scripts
 scaling factor: 1
 query mode: simple
@@ -6,52 +6,52 @@ number of clients: 200
 number of threads: 2
 maximum number of tries: 1
 duration: 45 s
-number of transactions actually processed: 63841
+number of transactions actually processed: 256874
 number of failed transactions: 0 (0.000%)
-latency average = 141.034 ms
-initial connection time = 562.758 ms
-tps = 1418.101196 (without initial connection time)
-SQL script 1: /home/bench/sis3/bench/ingest.sql
+latency average = 34.617 ms
+initial connection time = 718.718 ms
+tps = 5777.438029 (without initial connection time)
+SQL script 1: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/ingest.sql
  - weight: 40 (targets 40.0% of total)
- - 25612 transactions (40.1% of total, tps = 568.919783)
+ - 102843 transactions (40.0% of total, tps = 2313.075902)
  - number of failed transactions: 0 (0.000%)
- - latency average = 216.541 ms
- - latency stddev = 65.910 ms
+ - latency average = 56.402 ms
+ - latency stddev = 92.167 ms
  - statement latencies in milliseconds and failures:
-         0.002           0  \set is_new random(1, 100)
+         0.004           0  \set is_new random(1, 100)
          0.002           0  \set rid random(1, 500000)
          0.001           0  \set newk random(100000000, 2000000000)
          0.001           0  \set oldk random(1, :N)
-         0.000           0  \if :is_new <= 90
-         0.002           0  \set k :newk
+         0.002           0  \if :is_new <= 90
+         0.001           0  \set k :newk
          0.001           0  \set ts_epoch 0
          0.000           0  \else
-         0.001           0  \set k :oldk
-         0.002           0  \set ts_epoch :anchor - 604800 + (:k * 604800) / :N
+         0.002           0  \set k :oldk
+         0.001           0  \set ts_epoch :anchor - 604800 + (:k * 604800) / :N
          0.000           0  \endif
          0.001           0  \set chmod :k % 5
-        37.557           0  BEGIN;
-        34.565           0  SELECT email_on, push_on FROM preferences WHERE recipient_id = :rid;
-        45.503           0  INSERT INTO notification_events (event_id, recipient_id, channel, payload_ref, accepted_at)
-        47.956           0  WITH d AS (
-        50.950           0  COMMIT;
-SQL script 2: /home/bench/sis3/bench/update.sql
+         8.478           0  BEGIN;
+         9.053           0  SELECT email_on, push_on FROM preferences WHERE recipient_id = :rid;
+        10.991           0  INSERT INTO notification_events (event_id, recipient_id, channel, payload_ref, accepted_at)
+        14.698           0  WITH d AS (
+        13.167           0  COMMIT;
+SQL script 2: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/update.sql
  - weight: 30 (targets 30.0% of total)
- - 18984 transactions (29.7% of total, tps = 421.691908)
+ - 76977 transactions (30.0% of total, tps = 1731.315147)
  - number of failed transactions: 0 (0.000%)
- - latency average = 53.716 ms
- - latency stddev = 32.448 ms
+ - latency average = 14.791 ms
+ - latency stddev = 34.920 ms
  - statement latencies in milliseconds and failures:
-         0.003           0  \set id random(1, :N)
-         0.003           0  \set ts_epoch :anchor - 604800 + (:id * 604800) / :N
+         0.011           0  \set id random(1, :N)
+         0.002           0  \set ts_epoch :anchor - 604800 + (:id * 604800) / :N
          0.001           0  \set prov :id % 1000
-        53.710           0  UPDATE deliveries
-SQL script 3: /home/bench/sis3/bench/read_status.sql
+        14.780           0  UPDATE deliveries
+SQL script 3: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/read_status.sql
  - weight: 30 (targets 30.0% of total)
- - 19245 transactions (30.1% of total, tps = 427.489506)
+ - 77042 transactions (30.0% of total, tps = 1732.777084)
  - number of failed transactions: 0 (0.000%)
- - latency average = 40.057 ms
- - latency stddev = 30.072 ms
+ - latency average = 14.629 ms
+ - latency stddev = 37.640 ms
  - statement latencies in milliseconds and failures:
-         0.002           0  \set n random(1, :N)
-        40.055           0  SELECT status, attempts, updated_at FROM deliveries WHERE event_id = md5(CAST(:n AS text))::uuid;
+         0.006           0  \set n random(1, :N)
+        14.623           0  SELECT status, attempts, updated_at FROM deliveries WHERE event_id = md5(CAST(:n AS text))::uuid;

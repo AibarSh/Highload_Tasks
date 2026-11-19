@@ -1,4 +1,4 @@
-pgbench (16.15 (Ubuntu 16.15-0ubuntu0.24.04.1))
+pgbench (16.16 (Homebrew))
 transaction type: multiple scripts
 scaling factor: 1
 query mode: simple
@@ -6,59 +6,59 @@ number of clients: 8
 number of threads: 1
 maximum number of tries: 1
 duration: 45 s
-number of transactions actually processed: 30248
+number of transactions actually processed: 143707
 number of failed transactions: 0 (0.000%)
-latency average = 11.900 ms
-initial connection time = 10.204 ms
-tps = 672.293547 (without initial connection time)
-SQL script 1: /home/bench/sis3/bench/ingest.sql
+latency average = 2.505 ms
+initial connection time = 8.950 ms
+tps = 3193.632815 (without initial connection time)
+SQL script 1: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/ingest.sql
  - weight: 60 (targets 60.0% of total)
- - 18129 transactions (59.9% of total, tps = 402.936052)
+ - 86284 transactions (60.0% of total, tps = 1917.508638)
  - number of failed transactions: 0 (0.000%)
- - latency average = 13.107 ms
- - latency stddev = 6.405 ms
+ - latency average = 3.043 ms
+ - latency stddev = 4.430 ms
  - statement latencies in milliseconds and failures:
          0.001           0  \set is_new random(1, 100)
-         0.001           0  \set rid random(1, 500000)
+         0.000           0  \set rid random(1, 500000)
          0.000           0  \set newk random(100000000, 2000000000)
-         0.001           0  \set oldk random(1, :N)
+         0.000           0  \set oldk random(1, :N)
          0.001           0  \if :is_new <= 90
          0.000           0  \set k :newk
          0.000           0  \set ts_epoch 0
          0.000           0  \else
-         0.001           0  \set k :oldk
-         0.002           0  \set ts_epoch :anchor - 604800 + (:k * 604800) / :N
+         0.000           0  \set k :oldk
+         0.001           0  \set ts_epoch :anchor - 604800 + (:k * 604800) / :N
          0.000           0  \endif
          0.001           0  \set chmod :k % 5
-         1.153           0  BEGIN;
-         0.809           0  SELECT email_on, push_on FROM preferences WHERE recipient_id = :rid;
-         1.471           0  INSERT INTO notification_events (event_id, recipient_id, channel, payload_ref, accepted_at)
-         2.105           0  WITH d AS (
-         7.564           0  COMMIT;
-SQL script 2: /home/bench/sis3/bench/update.sql
+         0.493           0  BEGIN;
+         0.547           0  SELECT email_on, push_on FROM preferences WHERE recipient_id = :rid;
+         0.658           0  INSERT INTO notification_events (event_id, recipient_id, channel, payload_ref, accepted_at)
+         0.733           0  WITH d AS (
+         0.609           0  COMMIT;
+SQL script 2: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/update.sql
  - weight: 30 (targets 30.0% of total)
- - 9097 transactions (30.1% of total, tps = 202.190373)
+ - 42962 transactions (29.9% of total, tps = 954.754139)
  - number of failed transactions: 0 (0.000%)
- - latency average = 7.841 ms
- - latency stddev = 4.354 ms
+ - latency average = 1.001 ms
+ - latency stddev = 1.462 ms
  - statement latencies in milliseconds and failures:
          0.001           0  \set id random(1, :N)
-         0.002           0  \set ts_epoch :anchor - 604800 + (:id * 604800) / :N
-         0.001           0  \set prov :id % 1000
-         7.837           0  UPDATE deliveries
-SQL script 3: /home/bench/sis3/bench/relay.sql
+         0.001           0  \set ts_epoch :anchor - 604800 + (:id * 604800) / :N
+         0.000           0  \set prov :id % 1000
+         0.998           0  UPDATE deliveries
+SQL script 3: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/relay.sql
  - weight: 6 (targets 6.0% of total)
- - 1789 transactions (5.9% of total, tps = 39.762403)
+ - 8738 transactions (6.1% of total, tps = 194.186529)
  - number of failed transactions: 0 (0.000%)
- - latency average = 9.626 ms
- - latency stddev = 4.605 ms
+ - latency average = 1.546 ms
+ - latency stddev = 2.218 ms
  - statement latencies in milliseconds and failures:
-         9.626           0  WITH c AS (
-SQL script 4: /home/bench/sis3/bench/retry.sql
+         1.546           0  WITH c AS (
+SQL script 4: /Users/macbookair/Documents/GitHub/Highload_Tasks/SIS3/bench/retry.sql
  - weight: 4 (targets 4.0% of total)
- - 1233 transactions (4.1% of total, tps = 27.404719)
+ - 5723 transactions (4.0% of total, tps = 127.183510)
  - number of failed transactions: 0 (0.000%)
- - latency average = 26.745 ms
- - latency stddev = 8.596 ms
+ - latency average = 6.443 ms
+ - latency stddev = 5.028 ms
  - statement latencies in milliseconds and failures:
-        26.745           0  WITH c AS (
+         6.443           0  WITH c AS (

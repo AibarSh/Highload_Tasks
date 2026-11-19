@@ -2,91 +2,97 @@
 === Q1 ingest dedupe lookup: does (event_id, channel) already exist?
                                                 QUERY PLAN                                                
 ----------------------------------------------------------------------------------------------------------
- Gather (actual time=102.545..107.933 rows=1 loops=1)
+ Gather (actual time=33.927..50.712 rows=1 loops=1)
    Workers Planned: 2
    Workers Launched: 2
-   Buffers: shared hit=26354
-   ->  Parallel Seq Scan on deliveries (actual time=83.920..96.572 rows=0 loops=3)
+   Buffers: shared hit=24124 read=2230
+   I/O Timings: shared read=4.158
+   ->  Parallel Seq Scan on deliveries (actual time=39.621..44.604 rows=0 loops=3)
          Filter: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (channel = 'push'::text))
          Rows Removed by Filter: 666666
-         Buffers: shared hit=26354
+         Buffers: shared hit=24124 read=2230
+         I/O Timings: shared read=4.158
  Planning:
    Buffers: shared hit=77
- Planning Time: 0.457 ms
- Execution Time: 107.956 ms
-(12 rows)
+ Planning Time: 1.967 ms
+ Execution Time: 50.728 ms
+(14 rows)
 
 
 === Q2 status API: GET /v1/notifications/{id}
                                     QUERY PLAN                                     
 -----------------------------------------------------------------------------------
- Gather (actual time=106.603..106.920 rows=1 loops=1)
+ Gather (actual time=23.164..37.974 rows=1 loops=1)
    Workers Planned: 2
    Workers Launched: 2
-   Buffers: shared hit=26354
-   ->  Parallel Seq Scan on deliveries (actual time=86.234..98.731 rows=0 loops=3)
+   Buffers: shared hit=24220 read=2134
+   I/O Timings: shared read=3.005
+   ->  Parallel Seq Scan on deliveries (actual time=30.252..34.533 rows=0 loops=3)
          Filter: (event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid)
          Rows Removed by Filter: 666666
-         Buffers: shared hit=26354
+         Buffers: shared hit=24220 read=2134
+         I/O Timings: shared read=3.005
  Planning:
    Buffers: shared hit=9
- Planning Time: 0.152 ms
- Execution Time: 106.986 ms
-(12 rows)
+ Planning Time: 0.069 ms
+ Execution Time: 37.988 ms
+(14 rows)
 
 
 === Q2b status API, partition-aware (id carries its day)
                                                                                                                                              QUERY PLAN                                                                                                                                             
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- Gather (actual time=119.460..119.516 rows=1 loops=1)
+ Gather (actual time=56.950..59.039 rows=1 loops=1)
    Workers Planned: 2
    Workers Launched: 2
-   Buffers: shared hit=26354
-   ->  Parallel Seq Scan on deliveries (actual time=96.355..110.961 rows=0 loops=3)
-         Filter: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (accepted_at >= date_trunc('day'::text, '2026-11-15 07:42:13+00'::timestamp with time zone)) AND (accepted_at < (date_trunc('day'::text, '2026-11-15 07:42:13+00'::timestamp with time zone) + '1 day'::interval)))
+   Buffers: shared hit=24316 read=2038
+   I/O Timings: shared read=2.965
+   ->  Parallel Seq Scan on deliveries (actual time=48.424..55.160 rows=0 loops=3)
+         Filter: ((event_id = 'fcea920f-7412-b5da-7be0-cf42b8c93759'::uuid) AND (accepted_at >= date_trunc('day'::text, '2026-11-16 07:42:13+00'::timestamp with time zone)) AND (accepted_at < (date_trunc('day'::text, '2026-11-16 07:42:13+00'::timestamp with time zone) + '1 day'::interval)))
          Rows Removed by Filter: 666666
-         Buffers: shared hit=26354
+         Buffers: shared hit=24316 read=2038
+         I/O Timings: shared read=2.965
  Planning:
    Buffers: shared hit=11
- Planning Time: 0.206 ms
- Execution Time: 119.532 ms
-(12 rows)
+ Planning Time: 0.227 ms
+ Execution Time: 59.046 ms
+(14 rows)
 
 
 === Q3 worker ACK: UPDATE by delivery_id + accepted_at
                                            QUERY PLAN                                           
 ------------------------------------------------------------------------------------------------
- Update on deliveries (actual time=0.109..0.109 rows=0 loops=1)
+ Update on deliveries (actual time=0.105..0.105 rows=0 loops=1)
    Buffers: shared hit=19
-   ->  Index Scan using deliveries_pkey on deliveries (actual time=0.035..0.035 rows=1 loops=1)
+   ->  Index Scan using deliveries_pkey on deliveries (actual time=0.017..0.017 rows=1 loops=1)
          Index Cond: (delivery_id = 1234567)
-         Filter: (accepted_at = '2026-11-15 07:42:13+00'::timestamp with time zone)
+         Filter: (accepted_at = '2026-11-16 07:42:13+00'::timestamp with time zone)
          Buffers: shared hit=7
  Planning:
    Buffers: shared hit=21
- Planning Time: 0.237 ms
- Execution Time: 0.166 ms
+ Planning Time: 0.106 ms
+ Execution Time: 0.761 ms
 (10 rows)
 
 
 === Q4 outbox relay: claim 50 unpublished rows
                                                 QUERY PLAN                                                 
 -----------------------------------------------------------------------------------------------------------
- Update on outbox o (actual time=131.167..131.169 rows=0 loops=1)
+ Update on outbox o (actual time=133.253..133.254 rows=0 loops=1)
    Buffers: shared hit=20740 dirtied=1 written=1
-   I/O Timings: shared write=0.060
+   I/O Timings: shared write=0.044
    CTE c
-     ->  Limit (actual time=130.560..130.584 rows=50 loops=1)
+     ->  Limit (actual time=132.899..132.916 rows=50 loops=1)
            Buffers: shared hit=20174
-           ->  LockRows (actual time=130.559..130.579 rows=50 loops=1)
+           ->  LockRows (actual time=132.899..132.913 rows=50 loops=1)
                  Buffers: shared hit=20174
-                 ->  Index Scan using outbox_pkey on outbox (actual time=130.498..130.506 rows=50 loops=1)
+                 ->  Index Scan using outbox_pkey on outbox (actual time=132.793..132.798 rows=50 loops=1)
                        Filter: (published_at IS NULL)
                        Rows Removed by Filter: 1995000
                        Buffers: shared hit=20123
-   ->  Nested Loop (actual time=130.796..130.882 rows=50 loops=1)
+   ->  Nested Loop (actual time=132.958..133.024 rows=50 loops=1)
          Buffers: shared hit=20374
-         ->  CTE Scan on c (actual time=130.771..130.809 rows=50 loops=1)
+         ->  CTE Scan on c (actual time=132.938..132.969 rows=50 loops=1)
                Buffers: shared hit=20174
          ->  Index Scan using outbox_pkey on outbox o (actual time=0.001..0.001 rows=1 loops=50)
                Index Cond: (id = c.id)
@@ -94,90 +100,107 @@
                Buffers: shared hit=200
  Planning:
    Buffers: shared hit=128
- Planning Time: 0.271 ms
- Execution Time: 131.224 ms
+ Planning Time: 0.191 ms
+ Execution Time: 133.281 ms
 (24 rows)
 
 
 === Q5 retry scheduler: claim 50 due deliveries
                                                    QUERY PLAN                                                   
 ----------------------------------------------------------------------------------------------------------------
- Update on deliveries d (actual time=136.904..136.907 rows=0 loops=1)
-   Buffers: shared hit=27083
+ Update on deliveries d (actual time=167.089..167.089 rows=0 loops=1)
+   Buffers: shared hit=25114 read=1969 dirtied=27
+   I/O Timings: shared read=2.420
    CTE c
-     ->  Limit (actual time=136.580..136.612 rows=50 loops=1)
-           Buffers: shared hit=26424
-           ->  LockRows (actual time=136.579..136.608 rows=50 loops=1)
-                 Buffers: shared hit=26424
-                 ->  Sort (actual time=136.561..136.564 rows=50 loops=1)
+     ->  Limit (actual time=166.783..166.836 rows=50 loops=1)
+           Buffers: shared hit=24465 read=1959 dirtied=17
+           I/O Timings: shared read=2.386
+           ->  LockRows (actual time=166.783..166.834 rows=50 loops=1)
+                 Buffers: shared hit=24465 read=1959 dirtied=17
+                 I/O Timings: shared read=2.386
+                 ->  Sort (actual time=166.747..166.749 rows=50 loops=1)
                        Sort Key: deliveries.next_attempt_at
                        Sort Method: quicksort  Memory: 2409kB
-                       Buffers: shared hit=26357
-                       ->  Seq Scan on deliveries (actual time=0.007..131.956 rows=30000 loops=1)
+                       Buffers: shared hit=24415 read=1942
+                       I/O Timings: shared read=2.341
+                       ->  Seq Scan on deliveries (actual time=0.010..163.806 rows=30000 loops=1)
                              Filter: ((status = ANY ('{queued,retry}'::text[])) AND (next_attempt_at <= now()))
                              Rows Removed by Filter: 1970000
-                             Buffers: shared hit=26354
-   ->  Nested Loop (actual time=136.639..136.741 rows=50 loops=1)
-         Buffers: shared hit=26624
-         ->  CTE Scan on c (actual time=136.614..136.655 rows=50 loops=1)
-               Buffers: shared hit=26424
-         ->  Index Scan using deliveries_pkey on deliveries d (actual time=0.001..0.001 rows=1 loops=50)
+                             Buffers: shared hit=24412 read=1942
+                             I/O Timings: shared read=2.341
+   ->  Nested Loop (actual time=166.825..166.964 rows=50 loops=1)
+         Buffers: shared hit=24655 read=1969 dirtied=17
+         I/O Timings: shared read=2.420
+         ->  CTE Scan on c (actual time=166.807..166.869 rows=50 loops=1)
+               Buffers: shared hit=24465 read=1959 dirtied=17
+               I/O Timings: shared read=2.386
+         ->  Index Scan using deliveries_pkey on deliveries d (actual time=0.002..0.002 rows=1 loops=50)
                Index Cond: (delivery_id = c.delivery_id)
                Filter: (c.accepted_at = accepted_at)
-               Buffers: shared hit=200
+               Buffers: shared hit=190 read=10
+               I/O Timings: shared read=0.034
  Planning:
    Buffers: shared hit=60
- Planning Time: 0.273 ms
- Execution Time: 137.077 ms
-(27 rows)
+ Planning Time: 0.143 ms
+ Execution Time: 167.116 ms
+(35 rows)
 
 
 === Q6 monitoring: status counts for a 1-hour window
                                                                                                QUERY PLAN                                                                                                
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- Finalize GroupAggregate (actual time=135.138..136.001 rows=4 loops=1)
+ Finalize GroupAggregate (actual time=54.517..56.766 rows=4 loops=1)
    Group Key: status
-   Buffers: shared hit=26428
-   ->  Gather Merge (actual time=135.127..135.993 rows=8 loops=1)
+   Buffers: shared hit=24535 read=1893
+   I/O Timings: shared read=2.867
+   ->  Gather Merge (actual time=54.512..56.762 rows=12 loops=1)
          Workers Planned: 2
          Workers Launched: 2
-         Buffers: shared hit=26428
-         ->  Partial GroupAggregate (actual time=126.067..126.443 rows=3 loops=3)
+         Buffers: shared hit=24535 read=1893
+         I/O Timings: shared read=2.867
+         ->  Partial GroupAggregate (actual time=52.575..52.818 rows=4 loops=3)
                Group Key: status
-               Buffers: shared hit=26428
-               ->  Sort (actual time=126.057..126.193 rows=3968 loops=3)
+               Buffers: shared hit=24535 read=1893
+               I/O Timings: shared read=2.867
+               ->  Sort (actual time=52.299..52.396 rows=3968 loops=3)
                      Sort Key: status
-                     Sort Method: quicksort  Memory: 517kB
-                     Buffers: shared hit=26428
-                     Worker 0:  Sort Method: quicksort  Memory: 25kB
-                     Worker 1:  Sort Method: quicksort  Memory: 150kB
-                     ->  Parallel Seq Scan on deliveries (actual time=123.203..125.700 rows=3968 loops=3)
-                           Filter: ((accepted_at < '2026-11-18 00:00:00+00'::timestamp with time zone) AND (accepted_at >= ('2026-11-18 00:00:00+00'::timestamp with time zone - '01:00:00'::interval)))
+                     Sort Method: quicksort  Memory: 261kB
+                     Buffers: shared hit=24535 read=1893
+                     I/O Timings: shared read=2.867
+                     Worker 0:  Sort Method: quicksort  Memory: 154kB
+                     Worker 1:  Sort Method: quicksort  Memory: 157kB
+                     ->  Parallel Seq Scan on deliveries (actual time=51.664..52.071 rows=3968 loops=3)
+                           Filter: ((accepted_at < '2026-11-19 00:00:00+00'::timestamp with time zone) AND (accepted_at >= ('2026-11-19 00:00:00+00'::timestamp with time zone - '01:00:00'::interval)))
                            Rows Removed by Filter: 662699
-                           Buffers: shared hit=26354
+                           Buffers: shared hit=24461 read=1893
+                           I/O Timings: shared read=2.867
  Planning:
    Buffers: shared hit=11
- Planning Time: 0.133 ms
- Execution Time: 136.046 ms
-(24 rows)
+ Planning Time: 0.055 ms
+ Execution Time: 56.801 ms
+(29 rows)
 
 
 === Q7 daily report: failed deliveries for ONE seeded day (time-range query)
                                                                                                                       QUERY PLAN                                                                                                                      
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- Finalize Aggregate (actual time=118.255..119.406 rows=1 loops=1)
-   Buffers: shared hit=26354
-   ->  Gather (actual time=118.246..119.398 rows=3 loops=1)
+ Finalize Aggregate (actual time=53.028..54.987 rows=1 loops=1)
+   Buffers: shared hit=24557 read=1797
+   I/O Timings: shared read=2.459
+   ->  Gather (actual time=52.952..54.983 rows=3 loops=1)
          Workers Planned: 2
          Workers Launched: 2
-         Buffers: shared hit=26354
-         ->  Partial Aggregate (actual time=110.873..110.874 rows=1 loops=3)
-               Buffers: shared hit=26354
-               ->  Parallel Seq Scan on deliveries (actual time=63.649..110.840 rows=476 loops=3)
-                     Filter: ((status = 'failed'::text) AND (accepted_at >= ('2026-11-18 00:00:00+00'::timestamp with time zone - '3 days'::interval)) AND (accepted_at < ('2026-11-18 00:00:00+00'::timestamp with time zone - '2 days'::interval)))
+         Buffers: shared hit=24557 read=1797
+         I/O Timings: shared read=2.459
+         ->  Partial Aggregate (actual time=51.458..51.458 rows=1 loops=3)
+               Buffers: shared hit=24557 read=1797
+               I/O Timings: shared read=2.459
+               ->  Parallel Seq Scan on deliveries (actual time=29.011..51.427 rows=476 loops=3)
+                     Filter: ((status = 'failed'::text) AND (accepted_at >= ('2026-11-19 00:00:00+00'::timestamp with time zone - '3 days'::interval)) AND (accepted_at < ('2026-11-19 00:00:00+00'::timestamp with time zone - '2 days'::interval)))
                      Rows Removed by Filter: 666191
-                     Buffers: shared hit=26354
- Planning Time: 0.154 ms
- Execution Time: 119.436 ms
-(14 rows)
+                     Buffers: shared hit=24557 read=1797
+                     I/O Timings: shared read=2.459
+ Planning Time: 0.049 ms
+ Execution Time: 54.998 ms
+(18 rows)
 

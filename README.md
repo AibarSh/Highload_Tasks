@@ -3,11 +3,6 @@
 Schema, indexes, `EXPLAIN ANALYZE`, partitioning, a streaming **read replica** and **connection pooling (PgBouncer)** for the
 Notification Service from SIS #1, with a **before/after benchmark (p95 / p99)** and an explanation of every gain.
 
-* **What the numbers say and why:** [`REPORT.md`](REPORT.md)  ← the document to submit
-* **Raw measured output:** `results/summary.md`, `results/summary.csv`, `results/charts/*.png`, `results/plans/*.txt`
-
-> Everything here was actually run (PostgreSQL 16.15, PgBouncer 1.22). Absolute numbers come from a small 1-CPU sandbox, so **relative** gains are what matter; see "Limitations" in the report.
-
 ---
 
 ## 1. What is being tuned (workload taken from SIS #1)
